@@ -1,0 +1,32 @@
+{% extends 'main/main.html' %}{% load static %}{% block content %}
+<div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
+    <div class="card mb-2 container">
+        <div class="card-body p-2 p-sm-3">
+            <div class="media forum-item">
+                <h5>{{ post.profile.displayname }}</h5>
+                <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="{{ post.profile.avatar_url }}"
+                        class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                <div class="media-body">
+                    <div class="card-title">
+                        <h3>
+                            <a href="" data-toggle="collapse" data-target=".forum-content"
+                                class="text-body">{{ post.title }}</a>
+                        </h3>
+                    </div>
+                    <div class="card container">
+                        <p class="card-text">
+                            {{ post.body }}
+                            <hr>
+                            {{ post.profile.signature }}
+                        </p>
+                    </div>
+
+                    <p class="text-muted">
+                        <span class="text-secondary font-weight-bold">{{ post.created_time_human }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
