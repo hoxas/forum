@@ -1,0 +1,18 @@
+{% extends 'main/main.html' %}{% load static %}{% block content %}
+<div class="container bg-primary shadow-lg rounded">
+    <ul class="list-group">
+        {% for category in data.categories %}
+        <a
+            class="text-decoration-none"
+            href="category/{{category.name|lower}}/"
+        >
+            <div class="list-group-item">
+                <h6>{{category.name}}</h6>
+                <hr />
+                <p class="text-secondary">{{category.description}}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}

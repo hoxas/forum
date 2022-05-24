@@ -1,0 +1,29 @@
+{% extends 'main/main.html' %}{% load static %}{% block content %}
+<div class="container bg-primary shadow-lg rounded">
+    <ul class="list-group">
+        {% for post in data.posts %}
+        <a class="text-decoration-none" href="{{request.path + post.id}}">
+            <div class="list-group-item">
+                <div class="inline">
+                    <h6>{{post.title}}</h6>
+                    <hr />
+                    <p class="text-secondary">
+                        {{post.body|truncatechars:255}}
+                    </p>
+                </div>
+                <div class="inline">
+                    <h6>Created on:</h6>
+                    <hr />
+                    <p class="text-secondary">{{post.created_on}}</p>
+                </div>
+                <div class="inline">
+                    <h6>Last modified:</h6>
+                    <hr />
+                    <p class="text-secondary">{{post.last_modified}}</p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}
