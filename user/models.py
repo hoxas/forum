@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from django.templatetags.static import static
+
 # Create your models here.
 
 
@@ -11,6 +13,14 @@ class Profile(models.Model):
     location = models.CharField(max_length=80, blank=True)
     signature = models.TextField(max_length=250, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
+    avatar = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
         return self.displayname
+
+    @property
+    def avatar_url(self):
+        if self.avatar:
+            return self.avatar.url
+        else:
+            return static('images/default_avatar.png')
