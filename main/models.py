@@ -2,7 +2,7 @@ from django.db import models
 
 from user.models import *
 
-from .utils import *
+from main.utils import *
 from common.utils import *
 
 
@@ -21,10 +21,11 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    last_modified = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True)
+
+    created_on = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
     views = models.IntegerField(default=0)
     views_unique = models.ManyToManyField(
         Profile, related_name='views_unique', blank=True)
@@ -84,11 +85,13 @@ class Post(models.Model):
 class Comment(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     body = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
+    created_on = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+
     def __str__(self):
-        return f'{self.profile} - {self.id}'
+        return str(self.id)
 
     @property
     def created_time(self):
