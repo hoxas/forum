@@ -3,6 +3,7 @@ from django.db import models
 from user.models import *
 
 from .utils import *
+from common.utils import *
 
 
 # Create your models here.
@@ -25,10 +26,15 @@ class Post(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True)
     views = models.IntegerField(default=0)
-    views_unique = models.IntegerField(default=0)
+    views_unique = models.ManyToManyField(
+        Profile, related_name='views_unique', blank=True)
 
     def __str__(self):
         return self.title
+
+    @property
+    def views_unique_count(self):
+        return self.views_unique.count()
 
     @property
     def created_time(self):
