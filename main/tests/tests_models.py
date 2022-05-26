@@ -1,68 +1,11 @@
-from django.test import TestCase
-
-from freezegun import freeze_time
-from datetime import timezone
-
-from main.models import *
+from tests.utils import *
 
 # Create your tests here.
 
 
-class mockData:
-    def __init__(self):
-        self.username = 'Test User'
-        self.password = 'Test Password'
-        self.email = 'test@live.com'
-        self.displayname = 'Test Displayname'
-        self.bio = 'Test Bio'
-        self.location = 'Test Location'
-        self.signature = 'Test Signature'
-        self.category_name = 'Test Category'
-        self.category_description = 'Test Category Description'
-        self.post_title = 'Test Post Title'
-        self.post_body = 'Test Post Body'
-        self.comment_body = 'Test Comment Body'
-
-
-data = mockData()
-
-
-def objectCreator(self):
-    if self.__class__ in [TestCategory, TestPost, TestComment]:
-        self.category = Category.objects.create(name=data.category_name,
-                                                description=data.category_description)
-    if self.__class__ in [TestPost, TestComment]:
-        self.user = User.objects.create(
-            username=data.username,
-            password=data.password,
-            email=data.email
-        )
-
-        self.profile = Profile.objects.create(
-            user=self.user,
-            displayname=data.displayname,
-            bio=data.bio, location=data.location,
-            signature=data.signature
-        )
-
-        self.post = Post.objects.create(
-            title=data.post_title,
-            body=data.post_body,
-            profile=self.profile,
-            category=self.category
-        )
-
-    if self.__class__ in [TestComment]:
-        self.comment = Comment.objects.create(
-            profile=self.profile,
-            body=data.comment_body,
-            post=self.post
-        )
-
-
 class TestCategory(TestCase):
     def setUp(self):
-        objectCreator(self)
+        objectCreator(self, 'category')
 
     def test_category_str(self):
         self.assertEqual(str(self.category), data.category_name)
@@ -75,7 +18,7 @@ class TestCategory(TestCase):
 @freeze_time('2020-01-01 12:00:01')
 class TestPost(TestCase):
     def setUp(self):
-        objectCreator(self)
+        objectCreator(self, 'post')
 
     def test_post_str(self):
         self.assertEqual(str(self.post), data.post_title)
@@ -108,7 +51,7 @@ class TestPost(TestCase):
 @freeze_time('2020-01-01 12:00:01')
 class TestComment(TestCase):
     def setUp(self):
-        objectCreator(self)
+        objectCreator(self, 'comment')
 
     def test_comment_str(self):
         self.assertEqual(str(self.comment), str(self.comment.id))
