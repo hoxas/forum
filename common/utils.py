@@ -6,27 +6,28 @@ class Request_Context_Generic:
         self.request = request
         self.user = request.user
 
-    @property
-    def categories(self):
-        from main.models import Category
-        return Category.objects.all()
 
-
-def timeDeltaNow(creation_time):
+def timeDeltaNow(creation_time) -> tuple:
     now = datetime.now(timezone.utc)
     difference = now - creation_time
     seconds_in_day = 24 * 60 * 60
     result = divmod(difference.days * seconds_in_day +
                     difference.seconds, 60)
-
     return result
 
 
-def timeHuman(time_delta):
-    if len(time_delta) == 2:
-        if time_delta[0] == 0:
-            return 'less than a minute ago'
-        else:
-            return f'{time_delta[0]} minutes ago'
-    elif len(time_delta) == 3:
-        return f'{time_delta[0]} days ago'
+def timeHuman(time_delta) -> str:
+    minutes_in_hour = 60
+    minutes_in_day = 24 * minutes_in_hour
+    minutes_in_year = 365 * minutes_in_day
+
+    if time_delta[0] == 0:
+        return 'less than a minute ago'
+    elif time_delta[0] < minutes_in_hour:
+        return f'{time_delta[0]} minutes ago'
+    elif time_delta[0] < minutes_in_day:
+        return f'{time_delta[0] // minutes_in_hour} hours ago'
+    elif time_delta[0] < minutes_in_year:
+        return f'{time_delta[0] //  minutes_in_day} days ago'
+    elif time_delta[0] >= minutes_in_year:
+        return f'{time_delta[0] // minutes_in_year} years ago'
