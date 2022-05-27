@@ -1,5 +1,6 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.test.client import RequestFactory
+from django.urls import reverse
 from main.models import *
 from freezegun import freeze_time
 
@@ -23,12 +24,28 @@ class mockData:
 data = mockData()
 
 
-def objectCreator(self, target: str, data=data):
-    _possibilities = ['category', 'profile', 'post', 'comment']
+def objectCreator(self, target: str, data=data) -> str:
+    """
+    Manipulate self.testcase to create objects
+
+    Args:
+        target (str): The target object to create (category, profile, post, comment)
+        data (class, optional): Mock data to be used for object creation. Defaults to data.
+
+    Takes into account the objects dependency hierarchy.
+    e.g.:
+        target: 'comment' -> creates category, user, profile, post and comment
+
+    Returns:
+        str: Returns the created objects type (category, profile, post, comment)
+        in a string for printing and testing.
+    """
+    objects_created = []
 
     if target in ['category', 'post', 'comment']:
         self.category = Category.objects.create(name=data.category_name,
                                                 description=data.category_description)
+        objects_created.append('category')
 
     if target in ['profile', 'post', 'comment']:
         self.user = User.objects.create(
@@ -42,6 +59,7 @@ def objectCreator(self, target: str, data=data):
             bio=data.bio, location=data.location,
             signature=data.signature
         )
+        objects_created.extend(('user', 'profile'))
 
     if target in ['post', 'comment']:
         self.post = Post.objects.create(
@@ -50,6 +68,7 @@ def objectCreator(self, target: str, data=data):
             profile=self.profile,
             category=self.category
         )
+        objects_created.append('post')
 
     if target == 'comment':
         self.comment = Comment.objects.create(
@@ -57,9 +76,23 @@ def objectCreator(self, target: str, data=data):
             body=data.comment_body,
             post=self.post
         )
+        objects_created.append('comment')
+
+    separator = '-' * 20
+    log = f'\nobjectCreator -> Target: {target}\nObjects created: {objects_created}\n'
+    return log
 
 
 def timeCreator(timestring=''):
+    """
+    Create a datetime object with initial time added from text parsed from string.
+
+    Args:
+        timestring (str, optional): [{n}d] [{n}h] [{n}m] [{n}s] - Defaults to ''.
+
+    Returns:
+        _type_: _description_
+    """
     timestrings = timestring.split(' ')
     days = hours = minutes = seconds = 0
     for timestring in timestrings:
