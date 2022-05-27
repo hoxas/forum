@@ -3,22 +3,26 @@ from tests.utils import *
 from common.utils import *
 
 # Create your tests here
+"""Testing common.utils"""
 
 
 class TestRequestContextGeneric(TestCase):
-    def setUp(self):
-        self.request = RequestFactory().get('/')
-        objectCreator(self, 'profile')
-        self.request.user = self.user
-        self.request_context_generic = Request_Context_Generic(self.request)
+    @classmethod
+    def setUpTestData(cls):
+        cls.request = RequestFactory().get('/')
+        objectCreator(cls, 'profile')
+        cls.request.user = cls.user
+        cls.request_context_generic = Request_Context_Generic(cls.request)
 
     def test_request_context_generic_properties(self):
+        """Testing common.utils.Request_Context_Generic properties"""
         self.assertEqual(self.request_context_generic.request, self.request)
         self.assertEqual(self.request_context_generic.user, self.request.user)
 
 
 class TestTimeDeltaNow(TestCase):
     def test_time_delta_now(self):
+        """Testing common.utils.time_delta_now"""
         time_initial = timeCreator()
         with freeze_time(time_initial):
             time_delta = timeDeltaNow(time_initial)
@@ -40,6 +44,7 @@ class TestTimeDeltaNow(TestCase):
 
 class TestTimeHuman(TestCase):
     def test_time_human(self):
+        """Testing common.utils.time_human"""
         minutes_in_hour = 60
         minutes_in_day = 24 * minutes_in_hour
         minutes_in_year = 365 * minutes_in_day

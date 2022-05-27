@@ -3,15 +3,21 @@ from tests.utils import *
 from main.utils import *
 
 # Create your tests here.
+"""Testing main.utils"""
 
 
 class TestRequestContext(TestCase):
-    def setUp(self):
-        self.request = RequestFactory().get('/')
-        objectCreator(self, 'comment')
-        self.request.user = self.user
+    """Testing main.utils.Request_Context"""
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.request = RequestFactory().get('/')
+        objectCreator(cls, 'comment')
+        cls.request.user = cls.user
 
     def test_request_context_properties(self):
+        """Testing main.utils.RequestContext properties"""
+
         request_index = Request_Context(self.request)
         # Super class properties
         self.assertEqual(request_index.request, self.request)

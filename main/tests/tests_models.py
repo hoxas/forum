@@ -1,29 +1,40 @@
 from tests.utils import *
 
 # Create your tests here.
+"""Testing main.models"""
 
 
 class TestCategory(TestCase):
-    def setUp(self):
-        objectCreator(self, 'category')
+    """Testing main.models.Category"""
+
+    @classmethod
+    def setUpTestData(cls):
+        objectCreator(cls, 'category')
 
     def test_category_str(self):
+        """Testing category string representation"""
         self.assertEqual(str(self.category), data.category_name)
 
     def test_category_properties(self):
+        """Testing category properties"""
         self.assertEqual(self.category.name, data.category_name)
         self.assertEqual(self.category.description, data.category_description)
 
 
 @freeze_time('2020-01-01 12:00:01')
 class TestPost(TestCase):
-    def setUp(self):
-        objectCreator(self, 'post')
+    """Testing main.models.Post"""
+
+    @classmethod
+    def setUpTestData(cls):
+        objectCreator(cls, 'post')
 
     def test_post_str(self):
+        """Testing post string representation"""
         self.assertEqual(str(self.post), data.post_title)
 
     def test_post_properties(self):
+        """Testing post properties"""
         self.assertEqual(self.post.title, data.post_title)
         self.assertEqual(self.post.body, data.post_body)
         self.assertEqual(self.post.profile, self.profile)
@@ -50,13 +61,18 @@ class TestPost(TestCase):
 
 @freeze_time('2020-01-01 12:00:01')
 class TestComment(TestCase):
-    def setUp(self):
-        objectCreator(self, 'comment')
+    """Testing main.models.Comment"""
+
+    @classmethod
+    def setUpTestData(cls):
+        objectCreator(cls, 'comment')
 
     def test_comment_str(self):
+        """Testing comment string representation"""
         self.assertEqual(str(self.comment), str(self.comment.id))
 
     def test_comment_properties(self):
+        """Testing comment properties"""
         self.assertEqual(self.comment.profile, self.profile)
         self.assertEqual(self.comment.body, data.comment_body)
         self.assertEqual(self.comment.post, self.post)
