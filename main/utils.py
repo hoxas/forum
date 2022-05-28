@@ -8,7 +8,8 @@ class Request_Context(Request_Context_Generic):
         self.category = self.post = self.comments = self.posts = False
 
         if kwargs.get('category', False):
-            self.category = Category.objects.get(name=kwargs['category'])
+            self.category = Category.objects.get(
+                name__iexact=kwargs['category'])
             if kwargs.get('post_id', False):
                 self.post = Post.objects.get(id=kwargs['post_id'])
                 self.comments = Comment.objects.filter(post=self.post)
@@ -17,6 +18,8 @@ class Request_Context(Request_Context_Generic):
                     category=self.category)
         else:
             self.posts = Post.objects.all().order_by('-created_on')
+
+    # So basically if a post has no category it can't be accessed?
 
     @property
     def categories(self):
