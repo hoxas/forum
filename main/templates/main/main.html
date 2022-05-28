@@ -56,18 +56,30 @@
                                         ">
                                     <div class="simplebar-content" style="padding: 16px">
                                         <nav class="nav nav-pills nav-gap-y-1 flex-column">
-                                            <a href="javascript:void(0)"
-                                                class="nav-link nav-link-faded has-icon active">All Threads</a>
-                                            <a href="javascript:void(0)"
-                                                class="nav-link nav-link-faded has-icon">Popular this week</a>
-                                            <a href="javascript:void(0)"
-                                                class="nav-link nav-link-faded has-icon">Popular all time</a>
-                                            <a href="javascript:void(0)"
-                                                class="nav-link nav-link-faded has-icon">Solved</a>
-                                            <a href="javascript:void(0)"
-                                                class="nav-link nav-link-faded has-icon">Unsolved</a>
-                                            <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">No
-                                                replies yet</a>
+                                            <a href="/" class="nav-link nav-link-faded active">
+                                                <div class="nav-item media forum-item">
+                                                    <div class="media-body">
+                                                        Main
+                                                    </div>
+                                                    <div class="text-muted small text-center align-self-center">
+                                                        <i class="far fa-file ml-2"></i> {{data.all_posts_count}}
+                                                    </div>
+                                                </div>
+                                            </a>
+
+                                            {% for category in data.categories %}
+                                            <a href="/category/{{category.name.lower}}/"
+                                                class="nav-link nav-link-faded">
+                                                <div class="nav-item media forum-item">
+                                                    <div class="media-body">
+                                                        {{ category.name }}
+                                                    </div>
+                                                    <div class="text-muted small text-center align-self-center">
+                                                        <i class="far fa-file ml-2"></i> {{category.posts_count}}
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            {% endfor %}
                                         </nav>
                                     </div>
                                 </div>
