@@ -25,3 +25,8 @@ class Request_Context(Request_Context_Generic):
     def categories(self):
         from main.models import Category
         return Category.objects.all()
+
+    @property
+    def all_posts_count(self):
+        from main.models import Post
+        return Post.objects.count()
