@@ -28,5 +28,29 @@
             </div>
         </div>
     </div>
+    {% for comment in post.comments %}
+    <div class="card mb-2 container">
+        <div class="card-body p-2 p-sm-3">
+            <div class="media forum-item">
+                <h5>{{ comment.profile.displayname }}</h5>
+                <a href="#" data-toggle="collapse" data-target=".forum-content"><img
+                        src="{{ comment.profile.avatar_url }}" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                <div class="media-body">
+                    <div class="card container">
+                        <p class="card-text">
+                            {{ comment.body }}
+                            <hr>
+                            {{ comment.profile.signature }}
+                        </p>
+                    </div>
+
+                    <p class="text-muted">
+                        <span class="text-secondary font-weight-bold">{{ comment.created_time_human }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
 {% endblock content %}
