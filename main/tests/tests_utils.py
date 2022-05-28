@@ -32,6 +32,7 @@ class TestRequestContext(TestCase):
 
         self.assertQuerysetEqual(
             request_index.categories, Category.objects.all())
+        self.assertEqual(request_index.all_posts_count, Post.objects.count())
 
     def test_request_context_category(self):
         """Testing main.utils.RequestContext w/ category argument"""
