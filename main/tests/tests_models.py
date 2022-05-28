@@ -20,6 +20,11 @@ class TestCategory(TestCase):
         self.assertEqual(self.category.name, data.category_name)
         self.assertEqual(self.category.description, data.category_description)
 
+        self.assertQuerysetEqual(
+            self.category.posts, Post.objects.filter(category=self.category))
+        self.assertEqual(self.category.posts_count,
+                         Post.objects.filter(category=self.category).count())
+
 
 @freeze_time('2020-01-01 12:00:01')
 class TestPost(TestCase):
