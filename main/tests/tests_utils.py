@@ -33,16 +33,23 @@ class TestRequestContext(TestCase):
         self.assertQuerysetEqual(
             request_index.categories, Category.objects.all())
 
+    def test_request_context_category(self):
+        """Testing main.utils.RequestContext w/ category argument"""
+
+        # Making sure that category object name fetch is case insensitive
         request_category = Request_Context(
-            self.request, category=self.category.name)
+            self.request, category=self.category.name.lower())
+
         self.assertEqual(request_category.category, self.category)
         self.assertQuerysetEqual(request_category.posts, Post.objects.filter(
             category=self.category))
         self.assertFalse(request_category.post)
         self.assertFalse(request_category.comments)
 
+    def test_request_context_post(self):
+        """Testing main.utils.RequestContext w/ category & post id"""
         request_post = Request_Context(
-            self.request, category=self.category.name, post_id=self.post.id)
+            self.request, category=self.category.name.lower(), post_id=self.post.id)
         self.assertEqual(request_post.category, self.category)
         self.assertEqual(request_post.post, self.post)
         self.assertQuerysetEqual(request_post.comments,
