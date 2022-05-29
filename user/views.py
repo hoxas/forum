@@ -1,11 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from main.utils import *
+from user.utils import *
 
 # Create your views here.
 
 
-def user(request, user_id):
-    data = Request_Context(request)
+def account(request, profile_displayname=False):
+    data = Request_Context(request, profile=profile_displayname)
 
-    return render(request, 'user/user.html', {'title': 'User'})
+    if data.profile_search:
+        return render(request, 'user/account.html', {'data': data})
+    elif data.profile:
+        return redirect('/account/' + data.profile + '/')
+    else:
+        return render(request, 'user/auth.html', {'data': data})
