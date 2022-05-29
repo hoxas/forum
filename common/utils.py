@@ -1,10 +1,21 @@
 from datetime import datetime, timezone
+from django.db.models import QuerySet
 
 
 class Request_Context_Generic:
     def __init__(self, request):
         self.request = request
         self.user = request.user
+
+    @property
+    def categories(self) -> QuerySet:
+        from main.models import Category
+        return Category.objects.all()
+
+    @property
+    def all_posts_count(self) -> int:
+        from main.models import Post
+        return Post.objects.count()
 
 
 def timeDeltaNow(creation_time) -> tuple:

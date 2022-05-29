@@ -19,6 +19,11 @@ class TestRequestContextGeneric(TestCase):
         self.assertEqual(self.request_context_generic.request, self.request)
         self.assertEqual(self.request_context_generic.user, self.request.user)
 
+        self.assertQuerysetEqual(
+            self.request_context_generic.categories, Category.objects.all())
+        self.assertEqual(
+            self.request_context_generic.all_posts_count, Post.objects.count())
+
 
 class TestTimeDeltaNow(TestCase):
     def test_time_delta_now(self):

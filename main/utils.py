@@ -20,13 +20,3 @@ class Request_Context(Request_Context_Generic):
             self.posts = Post.objects.all().order_by('-created_on')
 
     # So basically if a post has no category it can't be accessed?
-
-    @property
-    def categories(self):
-        from main.models import Category
-        return Category.objects.all()
-
-    @property
-    def all_posts_count(self):
-        from main.models import Post
-        return Post.objects.count()
