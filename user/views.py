@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 
 from user.utils import *
 
+from user.forms import SignUpForm
+
 # Create your views here.
 
 
@@ -13,4 +15,4 @@ def account(request, profile_displayname=False):
     elif data.profile:
         return redirect('/account/' + data.profile + '/')
     else:
-        return render(request, 'user/auth.html', {'data': data})
+        return render(request, 'user/auth.html', {'data': data, 'SignUpForm': SignUpForm})

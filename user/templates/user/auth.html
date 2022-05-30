@@ -1,4 +1,11 @@
 {% extends 'main/main.html' %}{% load static %}
 {% block content %}
-
+<div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
+    <div class="card mb-2 container">
+        <div class="card-body p-2 p-sm-3">
+            {% csrf_token %}
+            {{SignUpForm}}
+        </div>
+    </div>
+</div>
 {% endblock content %}
