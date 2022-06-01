@@ -23,9 +23,9 @@ def register_POST(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
+            user = form.save()
             Profile.objects.create(
                 user=user, displayname=form.cleaned_data['displayname'])
-            user = form.save()
             login(request, user)
             messages.success(request, 'Account created successfully.')
             return redirect('/')
@@ -50,6 +50,11 @@ def login_POST(request):
     messages.error(request, 'Invalid username or password.')
 
     return redirect('/account/auth/')
+
+
+def logout_REQUEST(request):
+    logout(request)
+    return redirect('/')
 
 
 def account(request, profile_displayname=False):
