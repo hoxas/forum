@@ -1,10 +1,24 @@
-{% extends 'main/main.html' %}{% load static %}
+{% extends 'main/main.html' %}{% load static %} {% load crispy_forms_tags %}
 {% block content %}
 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
     <div class="card mb-2 container">
-        <div class="card-body p-2 p-sm-3">
-            {% csrf_token %}
-            {{SignUpForm}}
+        <div class="row">
+            <div class="card-body p-2 p-sm-3">
+                <form action="/account/login/" method="POST">
+                    <h3>Login</h3>
+                    {% csrf_token %}
+                    {{AuthenticationForm|crispy}}
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+            </div>
+            <div class="card-body p-2 p-sm-3 bg-secondary bg-light border-left border-secondary">
+                <form action="/account/register/" method="POST">
+                    <h3>Register</h3>
+                    {% csrf_token %}
+                    {{SignUpForm|crispy}}
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
