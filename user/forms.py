@@ -18,9 +18,9 @@ class SignUpForm(UserCreationForm):
         user = super(SignUpForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
         if commit:
-            if Profile.objects.get(displayname=self.cleaned_data['displayname']):
+            if Profile.objects.filter(displayname=self.cleaned_data['displayname']).exists():
                 raise forms.ValidationError('Displayname already taken')
-            elif User.objects.get(email=self.cleaned_data['email']):
+            elif User.objects.filter(email=self.cleaned_data['email']).exists():
                 raise forms.ValidationError('Email already taken')
             else:
                 user.save()
