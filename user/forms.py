@@ -23,7 +23,5 @@ class SignUpForm(UserCreationForm):
             elif User.objects.get(email=self.cleaned_data['email']):
                 raise forms.ValidationError('Email already taken')
             else:
-                Profile.objects.create(
-                    user=user, displayname=self.cleaned_data['displayname'])
                 user.save()
         return user
