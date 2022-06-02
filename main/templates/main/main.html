@@ -44,12 +44,13 @@
         <a class="nav-link text-white" href="/account/">{{data.user.username}}</a>
         <a class="nav-link btn bg-info" href="/account/logout/">Logout</a>
         {% else %}
-        <a class="nav-link btn bg-primary" href="/account/auth/">Login</a>
+        <a class="nav-link btn bg-primary text-white" href="/account/auth/">Login</a>
         {% endif %}
     </nav>
     <div class="inner-wrapper">
         <div class="inner-sidebar">
             <div class="inner-sidebar-header justify-content-center">
+                {% if request.user.is_authenticated %}
                 <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal"
                     data-target="#threadModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -60,6 +61,17 @@
                     </svg>
                     NEW DISCUSSION
                 </button>
+                {% else %}
+                <a class="btn btn-secondary has-icon btn-block" href="/account/auth/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-plus mr-2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    NEW DISCUSSION
+                </a>
+                {% endif %}
             </div>
 
             <div class="inner-sidebar-body p-0">
@@ -142,6 +154,7 @@
             <!-- Inner main body -->
             {% block content %}{% endblock content %}
 
+            {% if request.user.is_authenticated %}
             <div class="modal fade" id="threadModal" tabindex="-1" role="dialog" aria-labelledby="threadModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
@@ -180,6 +193,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 
