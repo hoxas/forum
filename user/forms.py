@@ -14,14 +14,23 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'displayname', 'email', 'password1', 'password2')
 
+    def clean_displayname(self):
+        displayname = self.cleaned_data.get('displayname')
+        if Profile.objects.filter(displayname=displayname).exists():
+            raise forms.ValidationError(
+                'Displayname already taken')
+        return displayname
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError(
+                'Email already taken')
+        return email
+
     def save(self, commit=True):
         user = super(SignUpForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
+
         if commit:
-            if Profile.objects.filter(displayname=self.cleaned_data['displayname']).exists():
-                raise forms.ValidationError('Displayname already taken')
-            elif User.objects.filter(email=self.cleaned_data['email']).exists():
-                raise forms.ValidationError('Email already taken')
-            else:
-                user.save()
+            user.save()
         return user
