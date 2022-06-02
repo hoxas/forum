@@ -27,9 +27,17 @@ def register_POST(request):
             Profile.objects.create(
                 user=user, displayname=form.cleaned_data['displayname'])
             login(request, user)
-            messages.success(request, 'Account created successfully.')
+            messages.success(
+                request, 'Account created successfully.', extra_tags='main')
             return redirect('/')
-        messages.error(request, 'Error creating account.')
+        elif form.errors:
+            for error in form.errors.values():
+                messages.error(request,  error,
+                               extra_tags='register')
+            return redirect('/account/auth/')
+
+        messages.error(request, 'Error creating account.',
+                       extra_tags='register')
         return redirect('/account/auth/')
 
     return redirect('/account/auth/')
@@ -44,10 +52,9 @@ def login_POST(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.success(request, 'Logged in as {username}')
                 return redirect('/')
-
-    messages.error(request, 'Invalid username or password.')
+    messages.error(request, 'Invalid username or password.',
+                   extra_tags='login')
 
     return redirect('/account/auth/')
 
