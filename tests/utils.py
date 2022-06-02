@@ -24,6 +24,12 @@ class mockData:
 data = mockData()
 
 
+class FakeUnauthUser:
+    def __init__(self):
+        self.username = 'AnonymousUser'
+        self.is_authenticated = False
+
+
 def objectCreator(self, target: str, data=data) -> str:
     """
     Manipulate self.testcase to create objects
