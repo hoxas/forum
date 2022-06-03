@@ -5,7 +5,8 @@ class Request_Context(Request_Context_Generic):
     def __init__(self, request, **kwargs):
         super().__init__(request)
         from main.models import Category, Post, Comment
-        self.category = self.post = self.comments = self.posts = False
+        self.post = self.comments = self.posts = False
+        self.category = 'main'
 
         if kwargs.get('category', False):
             self.category = Category.objects.get(

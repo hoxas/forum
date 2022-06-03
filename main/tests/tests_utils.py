@@ -26,9 +26,9 @@ class TestRequestContext(TestCase):
         # Sub class properties
         self.assertQuerysetEqual(request_index.posts,
                                  Post.objects.all().order_by('-created_on'))
-        self.assertFalse(request_index.category)
         self.assertFalse(request_index.post)
         self.assertFalse(request_index.comments)
+        self.assertEqual(request_index.category, 'main')
 
         self.assertQuerysetEqual(
             request_index.categories, Category.objects.all())
