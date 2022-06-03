@@ -13,7 +13,7 @@
                                 class="text-body">{{ post.title }}</a>
                         </h3>
                     </div>
-                    <div class="card container">
+                    <div class="card container m-1" style="word-break: break-all">
                         <p class="card-text">
                             {{ post.body }}
                             <hr>
@@ -43,14 +43,21 @@
                             {{ comment.profile.signature }}
                         </p>
                     </div>
-
-                    <p class="text-muted">
-                        <span class="text-secondary font-weight-bold">{{ comment.created_time_human }}</span>
-                    </p>
+                    <div class="row justify-content-between px-3 pt-2">
+                        <p class="text-muted">
+                            <span class="text-secondary font-weight-bold">{{ comment.created_time_human }}</span>
+                        </p>
+                        <div>
+                            <button class="btn btn-success rounded">36 <i class="fas fa-thumbs-up"></i></button>
+                            <button class="btn btn-danger rounded">48 <i class="fas fa-thumbs-down"></i></button>
+                            <button class="btn btn-primary rounded">Reply <i class="fas fa-reply pl-1"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
+<button class="btn btn-primary"><i class="fas fa-plus rounded-circle"></i></button>
 {% endblock content %}
