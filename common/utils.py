@@ -28,6 +28,13 @@ class Request_Context_Generic:
         else:
             return False
 
+    @property
+    def get_initial_post_form(self):
+        if self.category is not False:
+            if self.category != 'main':
+                return self.PostForm(initial={'category': self.category})
+        return self.PostForm()
+
 
 def timeDeltaNow(creation_time) -> tuple:
     now = datetime.now(timezone.utc)

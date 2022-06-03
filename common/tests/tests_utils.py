@@ -28,7 +28,7 @@ class TestRequestContextGeneric(TestCase):
             self.request_context_generic.all_posts_count, Post.objects.count())
 
         self.assertEqual(self.request_context_generic.profile, self.profile)
-
+        self.assertTrue(self.request_context_generic.get_initial_post_form)
         unauth_request = RequestFactory().get('/')
         unauth_request.user = FakeUnauthUser()
         unauth_request_context = Request_Context_Generic(unauth_request)
