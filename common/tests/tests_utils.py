@@ -20,6 +20,7 @@ class TestRequestContextGeneric(TestCase):
         self.assertEqual(self.request_context_generic.request, self.request)
         self.assertEqual(self.request_context_generic.user, self.request.user)
         self.assertEqual(self.request_context_generic.PostForm, PostForm)
+        self.assertEqual(self.request_context_generic.category, False)
 
         self.assertQuerysetEqual(
             self.request_context_generic.categories, Category.objects.all())

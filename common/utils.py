@@ -8,6 +8,7 @@ class Request_Context_Generic:
         self.request = request
         self.user = request.user
         self.PostForm = PostForm
+        self.category = False
 
     @property
     def categories(self) -> QuerySet:
