@@ -88,7 +88,8 @@
                                         ">
                                     <div class="simplebar-content" style="padding: 16px">
                                         <nav class="nav nav-pills nav-gap-y-1 flex-column">
-                                            <a href="/" class="nav-link nav-link-faded active">
+                                            <a href="/"
+                                                class="nav-link nav-link-faded {% if data.category == 'main' %}active{% endif %}">
                                                 <div class="nav-item media forum-item">
                                                     <div class="media-body">
                                                         Main
@@ -101,7 +102,7 @@
 
                                             {% for category in data.categories %}
                                             <a href="/category/{{category.name.lower}}/"
-                                                class="nav-link nav-link-faded">
+                                                class="nav-link nav-link-faded {% if data.category.name == category.name %}active{% endif %}">
                                                 <div class="nav-item media forum-item">
                                                     <div class="media-body">
                                                         {{ category.name }}
