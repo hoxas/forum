@@ -1,6 +1,8 @@
 from urllib.request import Request
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from main.utils import *
+from main.forms import *
 
 # Create your views here.
 
@@ -27,3 +29,25 @@ def post(request, category_name, post_id):
             data.post.views_unique.add(request.user.profile)
 
     return render(request, 'main/post.html', {'data': data, 'post': data.post})
+
+
+def create_post_POST(request):
+    data = Request_Context(request)
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.profile = data.profile
+            post.save()
+            messages.success(
+                request, 'Post created successfully.', extra_tags='main')
+            return redirect('/')
+        elif form.errors:
+            for error in form.errors.values():
+                messages.error(request,  error,
+                               extra_tags='add_post')
+            return redirect('/')
+
+        messages.error(request, 'Error creating post.',
+                       extra_tags='add_post')
+        return redirect('/')
