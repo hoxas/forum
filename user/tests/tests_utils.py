@@ -25,18 +25,17 @@ class TestRequestContext(TestCase):
         self.assertEqual(data_unauthenticated.user, self.unauth_user)
 
         # Sub class properties
-        self.assertFalse(data_unauthenticated.profile)
-        self.assertFalse(data_unauthenticated.profile_search)
+        data_unauthenticated_profile_search = Request_Context(
+            self.request, profile=self.profile.displayname)
+        self.assertFalse(data_unauthenticated_profile_search.profile_search)
 
         self.request.user = self.user
 
         data_authenticated = Request_Context(self.request)
         self.assertFalse(data_authenticated.profile_search)
-        self.assertEqual(data_authenticated.profile, self.profile.displayname)
 
         data_authenticated_profile_search = Request_Context(
             self.request, profile=self.profile.displayname)
 
-        self.assertFalse(data_authenticated_profile_search.profile)
         self.assertEqual(
             data_authenticated_profile_search.profile_search, self.profile)
