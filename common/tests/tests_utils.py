@@ -16,13 +16,23 @@ class TestRequestContextGeneric(TestCase):
 
     def test_request_context_generic_properties(self):
         """Testing common.utils.Request_Context_Generic properties"""
+        from main.forms import PostForm
         self.assertEqual(self.request_context_generic.request, self.request)
         self.assertEqual(self.request_context_generic.user, self.request.user)
+        self.assertEqual(self.request_context_generic.PostForm, PostForm)
 
         self.assertQuerysetEqual(
             self.request_context_generic.categories, Category.objects.all())
         self.assertEqual(
             self.request_context_generic.all_posts_count, Post.objects.count())
+
+        self.assertEqual(self.request_context_generic.profile, self.profile)
+
+        unauth_request = RequestFactory().get('/')
+        unauth_request.user = FakeUnauthUser()
+        unauth_request_context = Request_Context_Generic(unauth_request)
+
+        self.assertEqual(unauth_request_context.profile, False)
 
 
 class TestTimeDeltaNow(TestCase):
