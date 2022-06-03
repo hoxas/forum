@@ -4,12 +4,12 @@
     <div class="card mb-2">
         <div class="card-body p-2 p-sm-3">
             <div class="media forum-item">
-                <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="{{ post.profile.avatar_url }}"
+                <a href="/account/{{post.profile.displayname}}/"><img src="{{ post.profile.avatar_url }}"
                         class="mr-3 rounded-circle" width="50" alt="User" /></a>
                 <div class="media-body">
                     <h6>
-                        <a href="category/{{ post.category|lower }}/{{ post.id }}/" data-toggle="collapse"
-                            data-target=".forum-content" class="text-body">{{ post.title }}</a>
+                        <a href="category/{{ post.category|lower }}/{{ post.id }}/"
+                            class="text-body">{{ post.title }}</a>
                     </h6>
                     <p class="text-secondary">
                         {{ post.body|truncatechars:85}}
