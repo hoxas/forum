@@ -4,8 +4,10 @@ from django.db.models import QuerySet
 
 class Request_Context_Generic:
     def __init__(self, request):
+        from main.forms import PostForm
         self.request = request
         self.user = request.user
+        self.PostForm = PostForm
 
     @property
     def categories(self) -> QuerySet:
@@ -16,6 +18,14 @@ class Request_Context_Generic:
     def all_posts_count(self) -> int:
         from main.models import Post
         return Post.objects.count()
+
+    @property
+    def profile(self):
+        if self.user.is_authenticated:
+            from main.models import Profile
+            return Profile.objects.get(user=self.user)
+        else:
+            return False
 
 
 def timeDeltaNow(creation_time) -> tuple:
