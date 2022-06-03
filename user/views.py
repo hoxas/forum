@@ -70,6 +70,6 @@ def account(request, profile_displayname=False):
     if data.profile_search:
         return render(request, 'user/account.html', {'data': data})
     elif data.profile:
-        return redirect('/account/' + data.profile + '/')
+        return redirect('/account/' + data.profile.displayname + '/')
     else:
         return redirect('/account/auth/')
