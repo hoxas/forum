@@ -1,4 +1,16 @@
 {% extends 'main/main.html' %}{% load static %}
 {% block content %}
+<div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
+    <div class="card mb-2 p-0 container">
+        <div class="bg-dark text-white card-title py-2 d-flex flex-column shadow">
+            <h2 class="m-auto py-2">{{data.profile_search.displayname}}</h2>
+            <img src="{{data.profile_search.avatar_url}}" class="rounded-circle m-auto" width="133" height="133">
+            <h5 class="m-auto text-muted py-2">{{data.profile_search.location}}</h5>
+        </div>
+        <div class="card-body py-2">
+            <p>{{data.profile_search.bio}}</p>
+        </div>
 
+    </div>
+</div>
 {% endblock content %}
