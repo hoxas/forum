@@ -1,4 +1,13 @@
 from common.utils import *
+from django.core.paginator import Paginator
+
+
+def paginate(request, objects, per_page=2):
+    paginator = Paginator(objects, per_page)
+    page = request.GET.get('page')
+    objects = paginator.get_page(page)
+
+    return objects
 
 
 class Request_Context(Request_Context_Generic):
@@ -13,11 +22,15 @@ class Request_Context(Request_Context_Generic):
                 name__iexact=kwargs['category'])
             if kwargs.get('post_id', False):
                 self.post = Post.objects.get(id=kwargs['post_id'])
-                self.comments = Comment.objects.filter(post=self.post)
+                comments = Comment.objects.filter(
+                    post=self.post).order_by('created_on')
+                self.comments = paginate(request, comments)
             else:
-                self.posts = Post.objects.filter(
-                    category=self.category)
+                posts = Post.objects.filter(
+                    category=self.category).order_by('-created_on')
+                self.posts = paginate(request, posts)
         else:
-            self.posts = Post.objects.all().order_by('-created_on')
+            posts = Post.objects.all().order_by('-created_on')
+            self.posts = paginate(request, posts)
 
     # So basically if a post has no category it can't be accessed?
