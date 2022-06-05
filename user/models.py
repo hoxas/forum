@@ -21,6 +21,10 @@ class Profile(models.Model):
     @property
     def avatar_url(self):
         if self.avatar:
+            # REVERT THIS AFTER DEPLOYMENT
+            # NEEDED TO DISPLAY TEST DATA PROFILE IMGS
+            if str(self.avatar).startswith('http'):
+                return self.avatar
             return self.avatar.url
         else:
             return static('images/default_avatar.png')
