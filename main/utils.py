@@ -2,7 +2,7 @@ from common.utils import *
 from django.core.paginator import Paginator
 
 
-def paginate(request, objects, per_page=2):
+def paginate(request, objects, per_page=20):
     paginator = Paginator(objects, per_page)
     page = request.GET.get('page')
     objects = paginator.get_page(page)
