@@ -28,3 +28,13 @@ class Profile(models.Model):
             return self.avatar.url
         else:
             return static('images/default_avatar.png')
+
+    @property
+    def posts(self):
+        from main.models import Post
+        return Post.objects.filter(profile=self)
+
+    @property
+    def comments(self):
+        from main.models import Comment
+        return Comment.objects.filter(profile=self)
