@@ -10,7 +10,50 @@
         <div class="card-body py-2">
             <p>{{data.profile_search.bio}}</p>
         </div>
-
+    </div>
+    <div class="card mb-2 p-0 container">
+        <div class="card-title p-2">
+            <h2 class="text-center">{{data.profile_search.displayname}}'s Posts</h2>
+            <hr>
+        </div>
+        <div class="card-body py-2">
+            <div class="row">
+                {% for post in data.profile_search.posts %}
+                <div class="col-md-4">
+                    <div class="card mb-2 p-0">
+                        <div class="card-body py-2">
+                            <a href="/category/{{post.category.name.lower}}/{{post.id}}/">
+                                <h5 class="card-title">{{post.title}}</h5>
+                                <p class="card-text">{{post.body}}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="card mb-2 p-0 container">
+        <div class="card-title p-2">
+            <h2 class="text-center">{{data.profile_search.displayname}}'s Comments</h2>
+            <hr>
+        </div>
+        <div class="card-body py-2">
+            <div class="row">
+                {% for comment in data.profile_search.comments %}
+                <div class="col-md-4">
+                    <div class="card mb-2 p-0">
+                        <div class="card-body py-2">
+                            <a href="/category/{{comment.post.category.name.lower}}/{{comment.post.id}}/">
+                                <h5 class="card-title">{{comment.post.title}}</h5>
+                                <p class="card-text">{{comment.body}}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}
