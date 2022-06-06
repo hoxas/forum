@@ -15,7 +15,7 @@
                         {{ post.body|truncatechars:85}}
                     </p>
                     <p class="text-muted">
-                        <a href="javascript:void(0)">{{ post.last_comment_user }}</a>
+                        <a href="/account/{{ post.last_comment_user }}/">{{ post.last_comment_user }}</a>
                         replied
                         <span class="text-secondary font-weight-bold">{{post.last_comment_time_human}}</span>
                     </p>
