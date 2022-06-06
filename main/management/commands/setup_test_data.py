@@ -6,10 +6,10 @@ from user.models import *
 
 from main.factories import *
 
-NUM_USERS = 200
-NUM_CATEGORIES = 12
+NUM_USERS = 250
+NUM_CATEGORIES = 20
 NUM_POSTS = 1000
-NUM_COMMENTS = NUM_POSTS * 10
+NUM_COMMENTS = NUM_POSTS * 100
 
 
 class Command(BaseCommand):
@@ -30,11 +30,20 @@ class Command(BaseCommand):
         for _ in range(NUM_USERS):
             ProfileFactory()
 
+        self.stdout.write('Created Users and Profiles. 1/4')
+
         for _ in range(NUM_CATEGORIES):
             CategoryFactory()
+
+        self.stdout.write('Created Categories. 2/4')
 
         for _ in range(NUM_POSTS):
             PostFactory()
 
+        self.stdout.write('Created Posts. 3/4')
+
         for _ in range(NUM_COMMENTS):
             CommentFactory()
+
+        self.stdout.write('Created Comments. 4/4')
+        self.stdout.write('Done!')
