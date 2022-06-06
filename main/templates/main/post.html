@@ -1,11 +1,14 @@
 {% extends 'main/main.html' %}{% load static %}{% block content %}
 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
     <div class="card mb-2 container">
-        <div class="card-body p-2 p-sm-3">
+        <div class="card-body py-2 pr-2 pr-sm-3 py-sm-3 pl-0">
             <div class="media forum-item">
-                <h5>{{ post.profile.displayname }}</h5>
-                <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="{{ post.profile.avatar_url }}"
-                        class="mr-3 rounded-circle" height="50" width="50" alt="User" /></a>
+                <div class="d-flex flex-column py-1 px-3">
+                    <h5 class="mx-auto">{{ post.profile.displayname }}</h5>
+                    <a class="mx-auto" href="#" data-toggle="collapse" data-target=".forum-content"><img
+                            src="{{ post.profile.avatar_url }}" class="rounded-circle" height="50" width="50"
+                            alt="User" /></a>
+                </div>
                 <div class="media-body">
                     <div class="card-title">
                         <h3>
@@ -30,12 +33,14 @@
     </div>
     {% for comment in post.comments %}
     <div class="card mb-2 container">
-        <div class="card-body p-2 p-sm-3">
+        <div class="card-body py-2 pr-2 pr-sm-3 py-sm-3 pl-0">
             <div class="media forum-item">
-                <h5>{{ comment.profile.displayname }}</h5>
-                <a href="#" data-toggle="collapse" data-target=".forum-content"><img
-                        src="{{ comment.profile.avatar_url }}" class="mr-3 rounded-circle" height="50" width="50"
-                        alt="User" /></a>
+                <div class="d-flex flex-column px-3">
+                    <h5 class="mx-auto">{{ comment.profile.displayname }}</h5>
+                    <a class="mx-auto" href="#" data-toggle="collapse" data-target=".forum-content"><img
+                            src="{{ comment.profile.avatar_url }}" class="rounded-circle" height="50" width="50"
+                            alt="User" /></a>
+                </div>
                 <div class="media-body">
                     <div class="card container">
                         <p class="card-text">
