@@ -68,8 +68,9 @@ body {
     min-height: 3.5rem;
 }
 @media (max-width: 767.98px) {
-    .inner-sidebar {
+    .inner-sidebar:not(.responsive-sidebar) {
         left: -235px;
+        display: none;
     }
     .inner-main {
         left: 0;
@@ -80,6 +81,12 @@ body {
     .inner-expand .inner-wrapper {
         transform: translate3d(235px, 0, 0);
     }
+}
+
+.responsive-sidebar {
+    position: relative !important;
+    top: 3.5rem !important;
+    width: 100% !important;
 }
 
 .nav .show > .nav-link.nav-link-faded,

@@ -48,6 +48,88 @@
         {% endif %}
     </nav>
     <div class="inner-wrapper">
+        <div class="responsive-sidebar inner-sidebar collapse" id="responsive-sidebar">
+            {% if request.user.is_authenticated %}
+            <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal"
+                data-target="#threadModal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-plus mr-2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                NEW DISCUSSION
+            </button>
+            {% else %}
+            <a class="btn btn-secondary has-icon btn-block" href="/account/auth/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-plus mr-2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                NEW DISCUSSION
+            </a>
+            {% endif %}
+            <div class="inner-sidebar-body p-0">
+                <div class="p-3 h-100" data-simplebar="init">
+                    <div class="simplebar-wrapper" style="margin: -16px">
+                        <div class="simplebar-height-auto-observer-wrapper">
+                            <div class="simplebar-height-auto-observer"></div>
+                        </div>
+                        <div class="simplebar-mask">
+                            <div class="simplebar-offset" style="right: 0px; bottom: 0px">
+                                <div class="simplebar-content-wrapper" style="
+                                            height: 100%;
+                                            overflow: hidden scroll;
+                                        ">
+                                    <div class="simplebar-content" style="padding: 16px">
+                                        <nav class="nav nav-pills nav-gap-y-1 flex-column">
+                                            <a href="/"
+                                                class="nav-link nav-link-faded {% if data.category == 'main' %}active{% endif %}">
+                                                <div class="nav-item media forum-item">
+                                                    <div class="media-body">
+                                                        Main
+                                                    </div>
+                                                    <div class="text-muted small text-center align-self-center">
+                                                        <i class="far fa-file ml-2"></i> {{data.all_posts_count}}
+                                                    </div>
+                                                </div>
+                                            </a>
+
+                                            {% for category in data.categories %}
+                                            <a href="/category/{{category.name.lower}}/"
+                                                class="nav-link nav-link-faded {% if data.category.name == category.name %}active{% endif %}">
+                                                <div class="nav-item media forum-item">
+                                                    <div class="media-body">
+                                                        {{ category.name }}
+                                                    </div>
+                                                    <div class="text-muted small text-center align-self-center">
+                                                        <i class="far fa-file ml-2"></i> {{category.posts_count}}
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            {% endfor %}
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden">
+                        <div class="simplebar-scrollbar" style="width: 0px; display: none"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-vertical" style="visibility: visible">
+                        <div class="simplebar-scrollbar" style="
+                                    height: 25px;
+                                    display: block;
+                                    transform: translate3d(0px, 0px, 0px);
+                                "></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="inner-sidebar">
             <div class="inner-sidebar-header justify-content-center">
                 {% if request.user.is_authenticated %}
@@ -132,11 +214,10 @@
                 </div>
             </div>
         </div>
-
         <div class="inner-main">
             <div class="inner-main-header">
-                <a class="nav-link nav-icon rounded-circle nav-link-faded mr-3 d-md-none" href="#"
-                    data-toggle="inner-sidebar"><i class="material-icons">arrow_forward_ios</i></a>
+                <button class="btn btn-primary nav-icon nav-toggler rounded-circle mr-3 d-md-none"
+                    data-toggle="collapse" data-target="#responsive-sidebar">&#9776;</button>
                 <select class="custom-select custom-select-sm w-auto mr-1">
                     <option selected="">Latest</option>
                     <option value="1">Popular</option>
