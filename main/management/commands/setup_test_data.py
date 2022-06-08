@@ -7,9 +7,9 @@ from user.models import *
 from main.factories import *
 
 NUM_USERS = 250
-NUM_CATEGORIES = 20
-NUM_POSTS = 1000
-NUM_COMMENTS = NUM_POSTS * 100
+NUM_CATEGORIES = 6
+NUM_POSTS = 500
+NUM_COMMENTS = NUM_POSTS * 200
 
 
 class Command(BaseCommand):
@@ -21,7 +21,12 @@ class Command(BaseCommand):
         models = [User, Profile, Category, Post, Comment]
         for model in models:
             if model == User:
+                superusers = model.objects.filter(is_superuser=True)
+                superusers_profiles = [
+                    superuser.profile.id for superuser in superusers]
                 model.objects.filter(is_superuser=False).delete()
+            elif model == Profile:
+                model.objects.all().exclude(id__in=superusers_profiles).delete()
             else:
                 model.objects.all().delete()
 
