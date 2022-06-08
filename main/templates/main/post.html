@@ -5,7 +5,7 @@
             <div class="media forum-item row">
                 <div class="d-flex flex-column py-1 px-3 col-2">
                     <h5 class="mx-auto text-center">{{ post.profile.displayname }}</h5>
-                    <a class="mx-auto" href="#" data-toggle="collapse" data-target=".forum-content"><img
+                    <a class="mx-auto" href="/account/{{ post.profile.displayname }}/"><img
                             src="{{ post.profile.avatar_url }}" class="rounded-circle" height="50" width="50"
                             alt="User" /></a>
                 </div>
@@ -37,7 +37,7 @@
             <div class="media forum-item row">
                 <div class="d-flex flex-column px-3 col-2">
                     <h5 class="mx-auto text-center">{{ comment.profile.displayname }}</h5>
-                    <a class="mx-auto" href="#" data-toggle="collapse" data-target=".forum-content"><img
+                    <a class="mx-auto" href="/account/{{ comment.profile.displayname }}/"><img
                             src="{{ comment.profile.avatar_url }}" class="rounded-circle" height="50" width="50"
                             alt="User" /></a>
                 </div>
