@@ -27,7 +27,8 @@ class ProfileFactory(DjangoModelFactory):
     bio = factory.Faker('text')
     location = factory.Faker('city')
     signature = factory.Faker('text')
-    avatar = factory.Faker('image_url')
+    avatar = factory.LazyAttribute(lambda a: static(
+        f'images/avatars/{fuzzy.FuzzyInteger(1, 10).fuzz()}.jpg'))
 
 
 class CategoryFactory(DjangoModelFactory):
