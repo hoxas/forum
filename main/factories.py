@@ -3,16 +3,19 @@ import factory
 from factory import fuzzy
 from factory.django import DjangoModelFactory
 
+from faker import Faker as RealFaker
+
 from main.models import *
 from user.models import *
+
+fake = RealFaker()
 
 
 class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
-        django_get_or_create = ('username', 'email')
 
-    username = factory.Faker('user_name')
+    username = factory.LazyAttribute(lambda a: fake.unique.user_name())
     email = factory.Faker('email')
     password = factory.Faker('password')
 
@@ -20,7 +23,6 @@ class UserFactory(DjangoModelFactory):
 class ProfileFactory(DjangoModelFactory):
     class Meta:
         model = Profile
-        django_get_or_create = ('displayname',)
 
     user = factory.SubFactory(UserFactory)
     displayname = factory.Faker('name')
