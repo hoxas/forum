@@ -30,3 +30,5 @@ class TestProfile(TestCase):
         self.profile.avatar = static('images/my_avatar.png')
         self.assertEqual(self.profile.avatar_url,
                          static('images/my_avatar.png'))
+        self.assertQuerysetEqual(self.profile.posts, Post.objects.none())
+        self.assertQuerysetEqual(self.profile.comments, Comment.objects.none())
