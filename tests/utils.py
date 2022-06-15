@@ -7,7 +7,7 @@ from freezegun import freeze_time
 
 class mockData:
     def __init__(self):
-        self.username = 'Test User'
+        self.username = 'TestUser'
         self.password = 'Test Password'
         self.email = 'test@live.com'
         self.displayname = 'Test Displayname'
