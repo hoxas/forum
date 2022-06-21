@@ -56,9 +56,10 @@ def objectCreator(self, target: str, data=data) -> str:
     if target in ['profile', 'post', 'comment']:
         self.user = User.objects.create(
             username=data.username,
-            password=data.password,
             email=data.email
         )
+        self.user.set_password(data.password)
+        self.user.save()
         self.profile = Profile.objects.create(
             user=self.user,
             displayname=data.displayname,
