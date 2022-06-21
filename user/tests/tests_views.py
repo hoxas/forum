@@ -57,6 +57,25 @@ class TestViews(TestCase):
             'username': data.username,
             'password': data.password
         })
-        print(response.context)
+
         self.assertRedirects(response, reverse('index'))
         self.assertTrue(response.wsgi_request.user.is_authenticated)
+
+    def test_logout_REQUEST(self):
+        """Logging out user"""
+        response = self.authenticatedClient.get(reverse('logout'))
+        self.assertRedirects(response, reverse('index'))
+        self.assertFalse(response.wsgi_request.user.is_authenticated)
+
+    def test_account(self):
+        """Testing account page"""
+        response = self.client.get(reverse('account'))
+        self.assertRedirects(response, reverse('auth'))
+
+        response = self.authenticatedClient.get(reverse('account'))
+        self.assertRedirects(response, reverse(
+            'account-profile', args=(data.displayname,)))
+
+        response = self.authenticatedClient.get(
+            reverse('account-profile', args=(data.displayname,)))
+        self.assertTemplateUsed(response, 'user/account.html')
