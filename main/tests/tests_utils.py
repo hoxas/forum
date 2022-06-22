@@ -6,6 +6,38 @@ from main.utils import *
 """Testing main.utils"""
 
 
+class TestPaginate(TestCase):
+    """Testing main.utils.Paginate"""
+    @classmethod
+    def setUpTestData(cls):
+        objectCreator(cls, 'post')
+
+        for iteration in range(100):
+            Post.objects.create(
+                title=iteration, body=iteration, profile=cls.profile, category=cls.category)
+
+        cls.request = RequestFactory().get('/')
+        cls.objects = Post.objects.all().order_by('-created_on')
+        cls.paginate = Paginate(cls.request, cls.objects)
+        cls.paginator = cls.paginate.paginator
+        cls.pagenumber = cls.paginate.pagenumber
+
+    def test_paginate_properties(self):
+        test_paginator = Paginator(self.objects, 20)
+        self.assertEqual(self.paginator.num_pages, test_paginator.num_pages)
+
+        # Kinda hacky but does the job for now
+        paginator_comparisions = list(zip(self.paginator, test_paginator))
+        for comparision in paginator_comparisions:
+            self.assertEqual(repr(comparision[0]), repr(comparision[1]))
+
+        self.assertEqual(self.pagenumber, 1)
+        self.assertEqual(repr(self.paginate.objects), repr(self.paginator.get_page(
+            self.pagenumber)))
+        self.assertEqual(self.paginate.elided_page_range, [
+                         page for page in self.paginator.get_elided_page_range(self.pagenumber)])
+
+
 class TestRequestContext(TestCase):
     """Testing main.utils.Request_Context"""
 
