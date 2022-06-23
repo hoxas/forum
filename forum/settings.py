@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
 
     'crispy_forms',
+    'django_unicorn',
     'django_nose',
 ]
 
