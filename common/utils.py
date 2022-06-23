@@ -1,14 +1,26 @@
 from datetime import datetime, timezone
 from django.db.models import QuerySet
+import re
 
 
 class Request_Context_Generic:
     def __init__(self, request):
         from main.forms import PostForm
         self.request = request
+        self.request_path = self.request.get_full_path()
         self.user = request.user
         self.PostForm = PostForm
         self.category = False
+
+    @property
+    def path_query(self):
+        if '?' in self.request_path:
+            if re.search('&?page=[0-9]*', self.request_path):
+                self.request_path = re.sub(
+                    '&?page=[0-9]*', '', self.request_path)
+            return self.request_path + '&'
+        else:
+            return self.request_path + '?'
 
     @property
     def categories(self) -> QuerySet:
