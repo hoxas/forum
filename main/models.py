@@ -96,6 +96,10 @@ class Comment(models.Model):
 
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(
+        Profile, blank=True, related_name='likes')
+    dislikes = models.ManyToManyField(
+        Profile, blank=True, related_name='dislikes')
 
     def __str__(self):
         return str(self.id)
