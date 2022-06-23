@@ -1,4 +1,33 @@
 {% extends 'main/main.html' %}{% load static %}{% block content %}
+<div class="inner-main-header">
+    <button class="btn btn-primary nav-icon nav-toggler rounded-circle mr-3 d-md-none" data-toggle="collapse"
+        data-target="#responsive-sidebar">&#9776;</button>
+    {% comment %} <select class="custom-select custom-select-sm w-auto mr-1">
+        <option value="" {{data.url_filter|yesno:",selected=''"}}>
+            Latest
+        </option>
+        <option value="filter=oldest" {{data.url_filter|yesno:"selected=''"}}>Oldest</option>
+        <option value="2">No Replies Yet</option>
+        <option value="3">Popular</option>
+    </select> {% endcomment %}
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-filter"></i>
+            {{data.url_filter|title}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="?filter=newest">Latest</a>
+            <a class="dropdown-item" href="?filter=oldest">Oldest</a>
+            <a class="dropdown-item" href="?filter=no replies">No Replies</a>
+            <a class="dropdown-item" href="?filter=popular">Popular</a>
+        </div>
+    </div>
+    <span class="input-icon input-icon-sm ml-auto w-auto">
+        <input type="text" class="form-control form-control-sm bg-gray-200 border-gray-200 shadow-none mb-4 mt-4"
+            placeholder="Search forum" />
+    </span>
+</div>
 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
     {% for post in data.posts %}
     <div class="card mb-2">
@@ -33,7 +62,7 @@
         {% if data.posts.has_previous %}
         <li class="page-item">
             <span class="page-link has-icon">
-                <a href="?page={{data.posts.previous_page_number}}">
+                <a href="{{data.path_query}}page={{data.posts.previous_page_number}}">
                     <i class="material-icons">&laquo</i>
                 </a>
             </span>
@@ -50,7 +79,7 @@
         {% if page == data.posts.number %}
         <li class="page-item active">
             <span class="page-link">
-                <a href="?page={{page}}" class="text-white">
+                <a href="{{data.path_query}}page={{page}}" class="text-white">
                     {{page}}
                 </a>
             </span>
@@ -59,7 +88,7 @@
         {% if forloop.counter < 5 %}
         <li class="page-item">
             <span class="page-link">
-                <a href="?page={{data.posts.number|add:'-4'}}">
+                <a href="{{data.path_query}}page={{data.posts.number|add:'-4'}}">
                     {{page}}
                 </a>
             </span>
@@ -67,7 +96,7 @@
         {% else %}
         <li class="page-item">
             <span class="page-link">
-                <a href="?page={{data.posts.number|add:'4'}}">
+                <a href="{{data.path_query}}page={{data.posts.number|add:'4'}}">
                     {{page}}
                 </a>
             </span>
@@ -76,7 +105,7 @@
         {% else %}
         <li class="page-item">
             <span class="page-link">
-                <a href="?page={{page}}">
+                <a href="{{data.path_query}}page={{page}}">
                     {{page}}
                 </a>
             </span>
@@ -86,7 +115,7 @@
 
         {% if data.posts.has_next %}
         <li class="page-item">
-            <span class="page-link has-icon"><a href="?page={{data.posts.next_page_number}}">
+            <span class="page-link has-icon"><a href="{{data.path_query}}page={{data.posts.next_page_number}}">
                     <i class="material-icons">&raquo</i>
                 </a>
             </span>
