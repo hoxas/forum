@@ -14,12 +14,26 @@ class Paginate:
         self.elided_page_range = [page for page in get_elided_page_range]
 
 
+filters = {
+    'newest': lambda a: a.order_by('-created_on'),
+    'oldest': lambda a: a.order_by('created_on'),
+    'no replies': lambda a: a.filter(comment=None),
+    'popular': lambda a: sorted(a, key=lambda x: x.comments_count, reverse=True),
+}
+
+
 class Request_Context(Request_Context_Generic):
     def __init__(self, request, **kwargs):
         super().__init__(request)
         from main.models import Category, Post, Comment
         self.post = self.comments = self.posts = False
         self.category = 'main'
+
+        if request.GET.get('filter'):
+            self.url_filter = request.GET.get('filter')
+        else:
+            self.url_filter = 'newest'
+        self.filter = filters[self.url_filter]
 
         if kwargs.get('category', False):
             self.category = Category.objects.get(
@@ -33,12 +47,14 @@ class Request_Context(Request_Context_Generic):
                 self.comments = pagination.objects
             else:
                 posts = Post.objects.filter(
-                    category=self.category).order_by('-created_on')
+                    category=self.category)
+                posts = filters[self.url_filter](posts)
                 pagination = Paginate(request, posts)
                 self.page_range = pagination.elided_page_range
                 self.posts = pagination.objects
         else:
-            posts = Post.objects.all().order_by('-created_on')
+            posts = Post.objects.all()
+            posts = filters[self.url_filter](posts)
             pagination = Paginate(request, posts)
             self.page_range = list(pagination.elided_page_range)
             self.posts = pagination.objects
