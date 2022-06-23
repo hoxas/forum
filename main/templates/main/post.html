@@ -1,4 +1,5 @@
-{% extends 'main/main.html' %}{% load static %}{% block content %}
+{% extends 'main/main.html' %}{% load static %}{% load unicorn %}{% block content %}
+{% unicorn_scripts %}
 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
     <div class="card mb-2 container border border-danger">
         <div class="card-body p-2 p-sm-3">
@@ -54,9 +55,7 @@
                             <span class="text-secondary font-weight-bold">{{ comment.created_time_human }}</span>
                         </p>
                         <div>
-                            <button class="btn btn-success rounded">36 <i class="fas fa-thumbs-up"></i></button>
-                            <button class="btn btn-danger rounded">48 <i class="fas fa-thumbs-down"></i></button>
-                            <button class="btn btn-primary rounded">Reply <i class="fas fa-reply pl-1"></i></button>
+                            {% unicorn 'like-dislike' comment_id=comment.id %}
                         </div>
                     </div>
                 </div>
