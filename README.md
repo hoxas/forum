@@ -124,6 +124,7 @@ Add additional notes about how to deploy this on a live system.
 -   [SQLite](https://www.sqlite.org/) - Database
 -   [Django](https://www.djangoproject.com/) - Web & Server Framework
 -   [Python](https://www.python.org/) - Server Environment
+-   [Unicorn](https://www.django-unicorn.com/) - Front-end Framework
 -   [Bootstrap 4](https://getbootstrap.com/) - CSS Framework
 
 ## ✍️ Authors <a name = "authors"></a>
