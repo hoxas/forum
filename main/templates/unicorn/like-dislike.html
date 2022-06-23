@@ -1,0 +1,6 @@
+<div classname="">
+    {% csrf_token %}
+    <button u:click="like" class="btn btn-success rounded">{{likes}} <i class="fas fa-thumbs-up"></i></button>
+    <button u:click="dislike" class="btn btn-danger rounded">{{dislikes}} <i class="fas fa-thumbs-down"></i></button>
+    <button class="btn btn-primary rounded">Reply <i class="fas fa-reply pl-1"></i></button>
+</div>
