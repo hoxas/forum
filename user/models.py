@@ -28,9 +28,9 @@ class Profile(models.Model):
     @property
     def posts(self):
         from main.models import Post
-        return Post.objects.filter(profile=self)
+        return Post.objects.filter(profile=self).order_by('-created_on')
 
     @property
     def comments(self):
         from main.models import Comment
-        return Comment.objects.filter(profile=self)
+        return Comment.objects.filter(profile=self).order_by('-created_on')
