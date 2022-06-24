@@ -45,6 +45,7 @@ class Request_Context(Request_Context_Generic):
                 pagination = Paginate(request, comments)
                 self.page_range = pagination.elided_page_range
                 self.comments = pagination.objects
+                self.num_pages = pagination.paginator.num_pages
             else:
                 posts = Post.objects.filter(
                     category=self.category)

@@ -58,6 +58,10 @@ def create_comment_POST(request, category_name, post_id):
         data = Request_Context(
             request, category=category_name, post_id=post_id)
         form = CommentForm(request.POST)
+        if data.num_pages > 1:
+            page = f'?page={data.num_pages}'
+        else:
+            page = ''
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = data.post
@@ -65,13 +69,13 @@ def create_comment_POST(request, category_name, post_id):
             comment.save()
             messages.success(
                 request, 'Comment created successfully.', extra_tags='main')
-            return redirect(f'/category/{category_name}/{post_id}/')
+            return redirect(f'/category/{category_name}/{post_id}/{page}')
         elif form.errors:
             for error in form.errors.values():
                 messages.error(request,  error,
                                extra_tags='add_comment')
-            return redirect(f'/category/{category_name}/{post_id}/')
+            return redirect(f'/category/{category_name}/{post_id}/{page}')
 
         messages.error(request, 'Error creating comment.',
                        extra_tags='add_comment')
-        return redirect(f'/category/{category_name}/{post_id}/')
+        return redirect(f'/category/{category_name}/{post_id}/{page}')
